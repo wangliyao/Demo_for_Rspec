@@ -1,0 +1,63 @@
+<div class="form row">
+  <div>
+    <%= form_for @user, url: users_path, method: :post, html: {class: "form-horizontal col-sm-offset-3 col-md-offset-3"} do |t| %>
+        <h3 class="form-title">注册</h3>
+        <div class="col-sm-9 col-md-9">
+          <div class="form-group">
+            <i class="fa fa-user fa-lg"></i>
+            <input class="form-control required" type="text" id="phone" placeholder="用户名" name="name" autofocus="autofocus" maxlength="20"/>
+          </div>
+
+          <div class="form-group">
+            <div class="input-group">
+              <input type="password" class="form-control" id='code' placeholder="验证码">
+          <span class="input-group-btn">
+            <button class="btn btn-default" id="send_msg" type="button">
+              短信发送
+            </button>
+          </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= t.submit "注册", {:class => "btn btn-success pull-right", :id => "sub_btn"} %>
+            <%= link_to "返回", {:controller => 'sessions', :action => 'new'}, {:class => "btn btn-info pull-left"} %>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <hr/>
+          <input id='result' class='hidden'/>
+        </div>
+    <% end %>
+  </div>
+</div>
+<script>
+  $('#send_msg').click(function () {
+    var phone = $("#phone").val()
+    if (phone == '') {
+      alert('请填写手机号！')
+      return false;
+    }
+    $.ajax({
+      url: "/users/send_message",
+      type: "get",
+      data: {phone_msg: phone},
+      dataType: "text",
+      success: function (data) {
+        alert(data)
+      }
+    });
+  });
+
+  //   $('#sub_btn').click(function(){
+  //     var result = $('#result').val();
+  //     var code = $('#code').val();
+  //     if(code == result){
+  //       return true;
+  //     }else{
+  //       alert('验证码错误，请重新输入')
+  //       return false;
+  //     }
+  //   });
+</script>

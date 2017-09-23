@@ -1,0 +1,37 @@
+<style>
+  .nav-tabs {
+    border-bottom: 0px solid #dddddd;
+  }
+</style>
+<div class="form row">
+  <div>
+    <div class="form-horizontal col-sm-offset-3 col-md-offset-3" id="login_form">
+      <h3 class="form-title">登录</h3>
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active">
+          <a href="#home" aria-controls="home" role="tab" data-toggle="tab">密码登录</a></li>
+        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">短信登录</a></li>
+      </ul>
+
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="home">
+          <%= render 'logo_one' %>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="profile">
+          <%= render 'logo_two' %>
+        </div>
+      </div>
+    </div>
+    <%= link_to "注册", {:controller => 'users', :action => 'new'} %>
+
+  </div>
+</div>
+
+<script>
+  $('#myTabs a').click(function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+  })
+</script>

@@ -1,0 +1,52 @@
+<%= form_tag("/sessions/msg_login", method: "post") do %>
+    <div class="col-sm-9 col-md-9">
+      <div class="form-group">
+        <i class="fa fa-user fa-lg"></i>
+        <%= text_field_tag :name, [], {:placeholder => "用户名", :id => 'phone', :class => 'form-control'} %>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <%= text_field_tag :code, [], {:placeholder => "验证码", :id => 'code', :class => 'form-control'} %>
+          <span class="input-group-btn">
+              <button class="btn btn-default" id="send_msg" type="button">
+                短信发送
+              </button>
+            </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <input type="submit" class="btn btn-success pull-right" value="登录 "/>
+      </div>
+    </div>
+<% end %>
+<script>
+  $('#send_msg').click(function () {
+    var phone = $("#phone").val()
+    if (phone == '') {
+      alert('请填写手机号！')
+      return false;
+    }
+    $.ajax({
+      url: "/users/send_message",
+      type: "get",
+      data: {phone_msg: phone, flag: 'login'},
+      dataType: "text",
+      success: function (data) {
+        $('#result').val(data)
+        alert(data)
+      }
+    });
+  });
+
+  $('#sub_btn').click(function () {
+    var result = $('#result').val();
+    var code = $('#code').val();
+    if (code == result) {
+      return true;
+    } else {
+      alert('验证码错误，请重新输入')
+      return false;
+    }
+  });
+</script>
